@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投票应用</title>
+</head>
+<body>
+    <!-----获取视图中的数据------->
+    {% if qs %}
+        <ul>
+            {% for q in qs %}
+                <li><a href="/polls/{{ q.id }}">{{ q.question_text }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>没有数据</p>
+    {% endif %}
+</body>
+</html>

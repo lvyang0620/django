@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>问题详情页</title>
+</head>
+<body>
+    <h2>问题：{{ detail.question_text }}</h2>
+    <ul>
+        {% for c in detail.choice_set.all %}
+            <li>{{ c.choise.text }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
