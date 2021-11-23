@@ -53,7 +53,7 @@ class Material(models.Model):
     ]
     isvalid = models.IntegerField(choices=isvalid_choices,default=1)
     #物料标记
-    flag = models.CharField(max_length=10)
+    flag = models.CharField(max_length=10,blank=True,null=True)
     #供应商
     supplier = models.ForeignKey(Supplier,on_delete=models.CASCADE)
     #所属类别

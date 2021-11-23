@@ -26,12 +26,14 @@ admin.site.register(Category,CategoryAdmin)
 class BomlistInline(admin.StackedInline):
     model = Bomlist
 #注册Material模型
-class MaterialAdmin(admin.ModelAdmin):
+class MaterialAdmin(ImportExportModelAdmin):
+    #关联import_export的类
+    resource_class = MarerialResource
     list_display = ['category','code','description','partnumber','supplier']
     list_display_links = ['code','description','partnumber']
     search_fields = ('code','description','partnumber')
-    list_per_page = 5
-    #inlines = [BomlistInline, ]
+    list_per_page = 500
+
 admin.site.register(Material,MaterialAdmin)
 #注册Project模型
 class ProjectAdmin(admin.ModelAdmin):
