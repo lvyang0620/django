@@ -100,6 +100,8 @@ class Bomlist(models.Model):
     num = models.IntegerField(max_length=5,default=1)
     #位号序列
     references = models.CharField(max_length=1000,default='')
+    def __str__(self):
+        return f'{self.bominfo}---{self.material}'
 
 #ECN表
 class Ecn(models.Model):
