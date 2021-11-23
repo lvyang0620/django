@@ -69,7 +69,7 @@ class BomlistAdmin(ExportMixin, admin.ModelAdmin):
     list_per_page = 500
     #编辑页（详情页）显示的字段和顺序，不能显示外键的关联信息
     fields = ['bominfo','material','num','references']
-    # 定义编辑页（详情页）中不可编辑的字段
+    # 定义Bomlist的编辑页（详情页）中不可编辑的字段
     readonly_fields = ('bominfo','material')
 
     #显示外键的其他字段的函数
