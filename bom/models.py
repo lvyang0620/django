@@ -61,6 +61,7 @@ class Material(models.Model):
 
     def __str__(self):
         return self.code
+        #return f'{self.code} {self.description} {self.partnumber} {self.supplier}'
 
 class Project(models.Model):
     #项目名称
