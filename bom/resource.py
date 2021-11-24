@@ -51,21 +51,46 @@ class SupplierResource(resources.ModelResource):
 
 
 class MarerialResource(resources.ModelResource):
+    '''
     code = Field(attribute='code', column_name='物料编码')
     description = Field(attribute='description', column_name='物料描述')
     partnumber = Field(attribute='partnumber', column_name='物料型号')
+
     supplier_code = Field(attribute='supplier__code', column_name='供应商代码')
     supplier_name = Field(attribute='supplier__name', column_name='供应商名称')
     category_code = Field(attribute='category__code', column_name='类别编码')
     category_name = Field(attribute='category__name', column_name='类别名称')
+    '''
+    def __init__(self):
+        super(MarerialResource, self).__init__()
+        field_list = apps.get_model('bom', 'Material')._meta.fields
+        # 应用名与模型名
+        self.verbose_name_dict = {}
+        # 获取所有字段的verbose_name并存放在verbose_name_dict字典里
+        for i in field_list:
+            self.verbose_name_dict[i.name] = i.verbose_name
 
-    #import_id_fields = ('code',)
+    def get_export_fields(self):
+        fields = self.get_fields()
+        # 默认导入导出field的column_name为字段的名称
+        # 这里修改为字段的verbose_name
+        for field in fields:
+            field_name = self.get_field_name(field)
+            if field_name in self.verbose_name_dict.keys():
+                field.column_name = self.verbose_name_dict[field_name]
+                # 如果设置过verbose_name，则将column_name替换为verbose_name
+                # 否则维持原有的字段名
+        return fields
+
     class Meta:
         model = Material
         #导出字段
-        fields = ('code', 'description', 'partnumber','supplier_code', 'supplier_name','category_code','category_name')
+        skip_unchanged = True
+        report_skipped = True
+        import_id_fields = ('code',)
+        fields = ('code', 'description', 'partnumber','supplier__code','category__code')
         #导出字段的顺序
-        export_order = ('code', 'description', 'partnumber', 'supplier_code','supplier_name','category_code','category_name')
+        export_order = ('code', 'description', 'partnumber','supplier__code','category__code')
 
 class BomlistResource(resources.ModelResource):
     sn = Field(column_name='序号')

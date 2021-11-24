@@ -29,7 +29,7 @@ class Category(models.Model):
     #物料类别码
     code = models.CharField(max_length=4, primary_key=True)
     #类别名称
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20,null=True)
     #是否有效
     isvalid_choices = [
         (0, '无效'),
@@ -42,25 +42,27 @@ class Category(models.Model):
 
 class Material(models.Model):
     #物料编码
-    code = models.CharField(max_length=9, primary_key=True)
+    code = models.CharField(max_length=9, primary_key=True,verbose_name='物料编码')
     #物料描述
-    description = models.CharField(max_length=100,default='')
+    description = models.CharField(max_length=100,default='',verbose_name='物料描述')
     #物料型号
-    partnumber = models.CharField(max_length=50,default='',db_index=True)
+    partnumber = models.CharField(max_length=50,default='',db_index=True,verbose_name='物料型号')
+
     isvalid_choices = [
         (0, '无效'),
         (1, '有效'),
     ]
-    isvalid = models.IntegerField(choices=isvalid_choices,default=1)
+    isvalid = models.IntegerField(choices=isvalid_choices,default=1,null=True)
+
     #物料标记
     flag = models.CharField(max_length=10,blank=True,null=True)
     #供应商
-    supplier = models.ForeignKey(Supplier,on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier,on_delete=models.CASCADE,verbose_name='供应商',null=True)
     #所属类别
-    category = models.ForeignKey(Category,on_delete=models.CASCADE)
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,verbose_name='类别',null=True)
 
     def __str__(self):
-        return self.code
+        return str(self.code)
         #return f'{self.code} {self.description} {self.partnumber} {self.supplier}'
 
 class Project(models.Model):
