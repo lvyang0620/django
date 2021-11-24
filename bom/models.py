@@ -3,17 +3,17 @@ from django.db import models
 #供应商表
 class Supplier(models.Model):
     #供应商编码
-    code = models.CharField(max_length=10,primary_key=True)
+    code = models.CharField(max_length=10,primary_key=True,verbose_name='供应商编码')
     #供应商名称
-    name = models.CharField(max_length=50,db_index=True)
+    name = models.CharField(max_length=50,db_index=True,verbose_name='供应商名称')
     #联系人姓名
-    contacts_name = models.CharField(max_length=50,null=True)
+    contacts_name = models.CharField(max_length=50,blank=True,null=True,verbose_name='联系人')
     # 联系人电话
-    contacts_phone = models.CharField(max_length=20,null=True)
+    contacts_phone = models.CharField(max_length=20,blank=True,null=True,verbose_name='电话')
     # 联系人职位
-    contacts_position = models.CharField(max_length=20,null=True)
+    contacts_position = models.CharField(max_length=20,blank=True,null=True,verbose_name='职位')
     # 联系地址
-    address = models.CharField(max_length=100,null=True)
+    address = models.CharField(max_length=100,blank=True,null=True,verbose_name='地址')
     #是否有效
     isvalid_choices = [
         (0, '无效'),
