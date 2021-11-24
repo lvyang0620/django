@@ -3,6 +3,7 @@ from random import randint
 
 from django.apps import apps
 from import_export import resources
+from import_export.widgets import ForeignKeyWidget
 from import_export.fields import Field
 from .models import *
 
@@ -55,11 +56,11 @@ class MarerialResource(resources.ModelResource):
     code = Field(attribute='code', column_name='物料编码')
     description = Field(attribute='description', column_name='物料描述')
     partnumber = Field(attribute='partnumber', column_name='物料型号')
-
-    supplier_code = Field(attribute='supplier__code', column_name='供应商代码')
-    supplier_name = Field(attribute='supplier__name', column_name='供应商名称')
-    category_code = Field(attribute='category__code', column_name='类别编码')
-    category_name = Field(attribute='category__name', column_name='类别名称')
+    '''
+    Field(attribute='supplier_code', column_name='supplier_code',widget=ForeignKeyWidget(Supplier, 'code'))
+    Field(attribute='supplier_name', column_name='supplier_name',widget=ForeignKeyWidget(Supplier, 'name'))
+    Field(attribute='category_code', column_name='category_code',widget=ForeignKeyWidget(Category, 'code'))
+    Field(attribute='category_name', column_name='category_name',widget=ForeignKeyWidget(Category, 'name'))
     '''
     def __init__(self):
         super(MarerialResource, self).__init__()
@@ -69,7 +70,7 @@ class MarerialResource(resources.ModelResource):
         # 获取所有字段的verbose_name并存放在verbose_name_dict字典里
         for i in field_list:
             self.verbose_name_dict[i.name] = i.verbose_name
-
+    
     def get_export_fields(self):
         fields = self.get_fields()
         # 默认导入导出field的column_name为字段的名称
@@ -81,16 +82,16 @@ class MarerialResource(resources.ModelResource):
                 # 如果设置过verbose_name，则将column_name替换为verbose_name
                 # 否则维持原有的字段名
         return fields
-
+    '''
     class Meta:
         model = Material
         #导出字段
         skip_unchanged = True
         report_skipped = True
         import_id_fields = ('code',)
-        fields = ('code', 'description', 'partnumber','supplier__code','category__code')
+        #fields = ('code', 'description', 'partnumber','supplier__code','supplier__name','category__code','category__name')
         #导出字段的顺序
-        export_order = ('code', 'description', 'partnumber','supplier__code','category__code')
+        #export_order = ('code', 'description', 'partnumber','supplier__code','supplier__name','category__code','category__name')
 
 class BomlistResource(resources.ModelResource):
     sn = Field(column_name='序号')
