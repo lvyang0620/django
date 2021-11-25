@@ -10,7 +10,8 @@ from django.utils.html import format_html
 from django.http import HttpResponse
 # Register your models here.
 #注册Supplier模型
-class SupplierAdmin(admin.ModelAdmin):
+class SupplierAdmin(ImportExportModelAdmin):
+    resource_class = SupplierResource
     list_display = ['code','name','contacts_name','contacts_phone','contacts_position','address']
     list_display_links = ['name']
     search_fields = ('code', 'name','contacts_name')
@@ -22,12 +23,18 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display_links = ['code','name']
     list_per_page = 10
 admin.site.register(Category,CategoryAdmin)
+
+class BomlistInline(admin.StackedInline):
+    model = Bomlist
 #注册Material模型
-class MaterialAdmin(admin.ModelAdmin):
+class MaterialAdmin(ImportExportModelAdmin):
+    #关联import_export的类
+    resource_class = MarerialResource
     list_display = ['category','code','description','partnumber','supplier']
     list_display_links = ['code','description','partnumber']
     search_fields = ('code','description','partnumber')
-    list_per_page = 5
+    list_per_page = 500
+
 admin.site.register(Material,MaterialAdmin)
 #注册Project模型
 class ProjectAdmin(admin.ModelAdmin):
@@ -52,15 +59,22 @@ class EcnAdmin(admin.ModelAdmin):
     list_display_links = ['content']
     list_per_page = 10
 admin.site.register(Ecn,EcnAdmin)
+
 #注册Bomlist模型
 class BomlistAdmin(ExportMixin, admin.ModelAdmin):
+    #关联导出的类
     resource_class = BomlistResource
+    #列表显示的字段，含自定义的外键关联字段信息'description','partnumber','supplier'
     list_display = ['bominfo','material','description','partnumber','supplier','num','references']
-    list_display_links = ['material']
+    list_display_links = ['material','description','partnumber']
+    #可搜索的字段
     search_fields = ('bominfo__bomname', 'material__code',)
     list_per_page = 500
-    #fields = ('bominfo','material','description',)
-    #inlines = []
+    #编辑页（详情页）显示的字段和顺序，不能显示外键的关联信息
+    fields = ['bominfo','material','num','references']
+    # 定义Bomlist的编辑页（详情页）中不可编辑的字段
+    readonly_fields = ('bominfo','material')
+
     #显示外键的其他字段的函数
     def description(self,obj):
         return obj.material.description
