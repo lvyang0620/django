@@ -10,7 +10,8 @@ from django.utils.html import format_html
 from django.http import HttpResponse
 # Register your models here.
 #注册Supplier模型
-class SupplierAdmin(admin.ModelAdmin):
+class SupplierAdmin(ImportExportModelAdmin):
+    resource_class = SupplierResource
     list_display = ['code','name','contacts_name','contacts_phone','contacts_position','address']
     list_display_links = ['name']
     search_fields = ('code', 'name','contacts_name')
@@ -26,12 +27,14 @@ admin.site.register(Category,CategoryAdmin)
 class BomlistInline(admin.StackedInline):
     model = Bomlist
 #注册Material模型
-class MaterialAdmin(admin.ModelAdmin):
+class MaterialAdmin(ImportExportModelAdmin):
+    #关联import_export的类
+    resource_class = MarerialResource
     list_display = ['category','code','description','partnumber','supplier']
     list_display_links = ['code','description','partnumber']
     search_fields = ('code','description','partnumber')
-    list_per_page = 5
-    #inlines = [BomlistInline, ]
+    list_per_page = 500
+
 admin.site.register(Material,MaterialAdmin)
 #注册Project模型
 class ProjectAdmin(admin.ModelAdmin):
