@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BOM明细</title>
+</head>
+<body>
+    {% block page-content %}
+        <table class="">
+            <thead>
+                <tr>
+                    <th>物料编码</th>
+                    <th>物料描述</th>
+                    <th>型号</th>
+                    <th>供应商</th>
+                    <th>数量</th>
+                    <th>位号</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for q in qs_list %}
+                    <tr>
+                        <td>{{ q.material__code }}</td>
+                        <td>{{ q.material__description }}</td>
+                        <td>{{ q.material__partnumber }}</td>
+                        <td>{{ q.material__supplier__name }}</td>
+                        <td>{{ q.num }}</td>
+                        <td>{{ q.references }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
+</body>
+</html>

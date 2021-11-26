@@ -1,6 +1,8 @@
+from django.urls import reverse
+
 from import_export.admin import ImportExportModelAdmin,ExportMixin,ImportMixin
 from import_export import fields
-
+#from django.core.urlresolvers import reverse
 from django.utils import timezone
 from openpyxl import Workbook
 from django.contrib import admin
@@ -48,8 +50,13 @@ class BominfoAdmin(admin.ModelAdmin):
     list_display = ['bomname','hw_version','description','project','detail']
     list_display_links = ['bomname']
     list_per_page = 10
+
     def detail(self,obj):
-        return format_html('<a href="%s">%s</a>' % ("../bomlist/3/change/",'明细'))
+        #url = reverse('bom:index', kwargs={"pk": 1})
+        url = reverse('bom:specific_bom_detail', kwargs={"bomname": obj.bomname})
+        response = format_html("""<a href='{0}'>{1}</a>""", url, '明细')
+        return response
+
     detail.allow_tags = True
     detail.short_description = 'BOM明细'
 admin.site.register(Bominfo,BominfoAdmin)
