@@ -3,12 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>BOM明细</title>
+        <style>
+			table{
+				border: 1px solid black;
+				width:90%;
+				margin: 0 auto;
+				border-spacing:0 ;
+			}
+            th{
+				border: 1px solid black;
+				text-align: center;
+			}
+			tr{
+				border: 1px solid black;
+				text-align: center;
+			}
+			td{
+				border: 1px solid black;
+
+			}
+		</style>
 </head>
 <body>
+    <h1 align="center">{{ bomname }}明细</h1>
     {% block page-content %}
-        <table class="">
+        <table class="" >
             <thead>
                 <tr>
+                    <th>序号</th>
                     <th>物料编码</th>
                     <th>物料描述</th>
                     <th>型号</th>
@@ -20,6 +42,7 @@
             <tbody>
                 {% for q in qs_list %}
                     <tr>
+                        <td>{{ forloop.counter }}</td>
                         <td>{{ q.material__code }}</td>
                         <td>{{ q.material__description }}</td>
                         <td>{{ q.material__partnumber }}</td>

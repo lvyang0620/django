@@ -24,4 +24,4 @@ def specific_bom_detail(request,bomname):
         })
     return render(request,'specific_bom_detail.html',data,content_type='application/json')
     '''
-    return render(request, 'specific_bom_detail.html', {'qs_list': qs})
+    return render(request, 'specific_bom_detail.html', {'qs_list': qs,'bomname':bomname})
