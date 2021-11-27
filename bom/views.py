@@ -5,8 +5,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 
 # Create your views here.
-def index(request,id):
-    return HttpResponse('测试index请求，id={}'.format(id))
+def index(request):
+    #return HttpResponse('测试index请求，id={}'.format(id))
+    return render(request,'index.html')
 
 #测试重定向
 def test_reverse(request,id):

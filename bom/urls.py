@@ -8,7 +8,8 @@ urlpatterns = [
     path('test02/', views.test02),
     path('test/<int:id>/', views.test,name='test'),
     path('test_reverse/<int:id>/', views.test_reverse,name='test_reverse'),
-    path('index/<int:id>/', views.index,name='index'),
+    #path('index/<int:id>/', views.index,name='index'),
+    path('', views.index,name='index'),
     path('specific_bom_detail/<str:bomname>/', bominfo_to_bomlist_views.specific_bom_detail,name='specific_bom_detail'),
 
 ]
