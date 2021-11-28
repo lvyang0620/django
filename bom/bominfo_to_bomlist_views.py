@@ -8,12 +8,15 @@ from django.core.paginator import Paginator, EmptyPage
 
 
 def specific_bom_detail(request,bomname):
+    #根据bomname获取该bom的所有数据，包括器件信息，数量，位号
     bominfo_id = Bominfo.objects.get(bomname=bomname)
     bominfo_bomlist_list = Bomlist.objects.values('material__code','material__description','material__partnumber','material__supplier__name','num','references').filter(bominfo=bominfo_id)
 
+    #total = bominfo_bomlist_list.count()
+    #print(bominfo_bomlist_list)
     paginator = Paginator(bominfo_bomlist_list, 10)  # 根据指定的每页列表大小进行分页
     try:
-        current_page_num = int(request.GET.get('page', 1))
+        current_page_num = int(request.GET.get('page', 1))      # 根据url获取当前页，没有时取1
         page_bominfo_bomlist_list = paginator.page(current_page_num)  # 根据页数获取特定页的列表
         page_num = paginator.num_pages
     except EmptyPage:

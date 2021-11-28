@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load filters %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +36,7 @@
 </head>
 <body>
     <div align="center" ><h1 >{{ bomname }}明细</h1></div>
+    <div align="right" ><a href="/admin/bom/bominfo/" ><span >返回</span></a></div>
     {% block page-content %}
             <table class="" >
                 <thead>
@@ -52,7 +53,7 @@
                 <tbody>
                     {% for q in qs_list %}
                         <tr>
-                            <td>{{ forloop.counter }}</td>
+                            <td>{{ forloop.counter|counter:current_page_num }}</td>
                             <td>{{ q.material__code }}</td>
                             <td>{{ q.material__description }}</td>
                             <td>{{ q.material__partnumber }}</td>
@@ -79,7 +80,7 @@
                     {#遍历页码的列表#}
                     {% for i in pageRange %}
                         {#判断当前页码数等于底部页码时#}
-                        {% if current_num == i %}
+                        {% if current_page_num == i %}
                             {#增加class,加深按钮#}
                             <li class="active"><a href="?page={{ i }}">{{ i }}</a></li>
                         {% else %}
