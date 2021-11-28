@@ -1,0 +1,107 @@
+{% load static %}
+{% load filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {#    核心组件 bootstrap JQuey#}
+    <link href="{% static 'bom/bootstrap-5.1.3/dist/css/bootstrap.css' %}" rel="stylesheet"/>
+    <script src="{% static 'bom/jquery/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'bom/bootstrap-5.1.3/dist/js/bootstrap.min.js' %}"></script>
+    {#    bootstrap-table 插件#}
+    <link href="{% static 'bom/bootstrap-table-1.19.1/dist/bootstrap-table.css' %}" rel="stylesheet"/>
+    <script src="{% static 'bom/bootstrap-table-1.19.1/dist/bootstrap-table.js' %}"></script>
+    <script src="{% static 'bom/bootstrap-table-1.19.1/dist/locale/bootstrap-table-zh-CN.js' %}"></script>
+    <title>BOM明细</title>
+        <style>
+			table{
+				border: 1px solid black;
+				width:90%;
+				margin: 0 auto;
+				border-spacing:0 ;
+			}
+            th{
+				border: 1px solid black;
+				text-align: center;
+			}
+			tr{
+				border: 1px solid black;
+				text-align: center;
+			}
+			td{
+				border: 1px solid black;
+
+			}
+		</style>
+</head>
+<body>
+    <div align="center" ><h1 >{{ bomname }}明细</h1></div>
+
+    {% block page-content %}
+
+            <table class="" >
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>物料编码</th>
+                        <th>物料描述</th>
+                        <th>型号</th>
+                        <th>供应商</th>
+                        <th>数量</th>
+                        <th>位号</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for q in qs_list %}
+                        <tr>
+                            <td>{{ forloop.counter|counter:current_page_num }}</td>
+                            <td>{{ q.material__code }}</td>
+                            <td>{{ q.material__description }}</td>
+                            <td>{{ q.material__partnumber }}</td>
+                            <td>{{ q.material__supplier__name }}</td>
+                            <td>{{ q.num }}</td>
+                            <td>{{ q.references }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {#分页展示#}
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {#has_previous 判断是否有上一页#}
+                    {% if qs_list.has_previous %}
+                        {#previous_page_number 上一页的页码#}
+                        <li><a href="?page={{ qs_list.previous_page_number }}" aria-label="Previous"><span
+                                aria-hidden="true">上一页</span></a></li>
+                    {% else %}
+                        {#class="disabled" 禁止用户点击#}
+                        <li class="disabled"><a href="" aria-label="Previous"><span aria-hidden="true">上一页</span></a></li>
+                    {% endif %}
+                    {#遍历页码的列表#}
+                    {% for i in pageRange %}
+                        {#判断当前页码数等于底部页码时#}
+                        {% if current_page_num == i %}
+                            {#增加class,加深按钮#}
+                            <li class="active"><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% else %}
+                            {#href参数为简写,它会自动获取当前路径，并拼接参数#}
+                            <li><a href="?page={{ i }}">{{ i }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {#has_next 判断是否有下一页#}
+                    {% if qs_list.has_next %}
+                        {#next_page_number 下一页的页码#}
+                        <li><a href="?page={{ qs_list.next_page_number }}" aria-label="Next"><span
+                                aria-hidden="true">下一页</span></a></li>
+                    {% else %}
+                        {#class="disabled" 禁止用户点击#}
+                        <li class="disabled"><a href="" aria-label="Next"><span aria-hidden="true">下一页</span></a></li>
+                    {% endif %}
+                    <li><a href="?page={{ paginator.num_pages }}" aria-label="Next"><span aria-hidden="true">最后一页</span></a></li>
+                </ul>
+            </nav>
+        <div align="right" ><a href="/admin/bom/bominfo/" ><span >返回</span></a></div>
+    {% endblock %}
+</body>
+</html>
