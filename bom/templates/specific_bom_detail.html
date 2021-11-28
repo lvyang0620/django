@@ -36,8 +36,9 @@
 </head>
 <body>
     <div align="center" ><h1 >{{ bomname }}明细</h1></div>
-    <div align="right" ><a href="/admin/bom/bominfo/" ><span >返回</span></a></div>
+
     {% block page-content %}
+
             <table class="" >
                 <thead>
                     <tr>
@@ -100,6 +101,7 @@
                     <li><a href="?page={{ paginator.num_pages }}" aria-label="Next"><span aria-hidden="true">最后一页</span></a></li>
                 </ul>
             </nav>
+        <div align="right" ><a href="/admin/bom/bominfo/" ><span >返回</span></a></div>
     {% endblock %}
 </body>
 </html>
