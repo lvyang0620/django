@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .models  import *
 
-# Create your views here.
+# 用Listview实现Supplier列表显示
 class SupplierListView(ListView):
     #查询的模型
     model = Supplier
@@ -14,7 +14,23 @@ class SupplierListView(ListView):
     #每页显示5条
     paginate_by = 5
 
+# 用Listview实现Supplier列表显示
+class CategoryListView(ListView):
+    #查询的模型
+    model = Category
+    #查询返回结果集，优先级最好，设置以后model失效
+    #queryset =
+    #每页显示5条
+    paginate_by = 5
 
+# 用Listview实现Project列表显示
+class ProjectListView(ListView):
+    #查询的模型
+    model = Project
+    #查询返回结果集，优先级最好，设置以后model失效
+    #queryset =
+    #每页显示5条
+    paginate_by = 5
 
 def index(request):
     #return HttpResponse('测试index请求，id={}'.format(id))
