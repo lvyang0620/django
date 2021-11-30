@@ -10,6 +10,7 @@ urlpatterns = [
     path('test_reverse/<int:id>/', views.test_reverse,name='test_reverse'),
     #path('index/<int:id>/', views.index,name='index'),
     path('', views.index,name='index'),
+    path('supplierlist/',views.SupplierListView.as_view(),name='supplierlist'),
     path('specific_bom_detail/<str:bomname>/', bominfo_to_bomlist_views.specific_bom_detail,name='specific_bom_detail'),
 
 ]
