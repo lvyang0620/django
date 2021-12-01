@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>项目信息列表</title>
+    <title>BOM条目列表</title>
         <style>
 			table{
 				border: 1px solid black;
@@ -30,19 +30,23 @@
 </head>
 <body>
     <table border="1" cellspacing="0">
-        <caption><h2>项目信息列表</h2></caption>
+        <caption><h2>BOM条目列表</h2></caption>
         <tr>
-            <td>项目名称</td>
-            <td>配置描述</td>
+            <td>所属的BOM名称</td>
+            <td>物料</td>
+            <td>数量</td>
+            <td>位号</td>
         </tr>
         {% for obj in object_list %}
             <tr>
-                <td>{{ obj.name }}</td>
-                <td>{{ obj.description }}</td>
+                <td>{{ obj.bominfo }}</td>
+                <td>{{ obj.material }}</td>
+                <td>{{ obj.num }}</td>
+                <td>{{ obj.references }}</td>
             </tr>
         {% endfor %}
         <tr>
-            <td colspan="2">
+            <td colspan="4">
                 <span style="float: left">共{{ page_obj.paginator.num_pages }}页，第{{ page_obj.number }}页</span>
                 <span style="padding-left: 50px">
                     {% if page_obj.has_previous %}
