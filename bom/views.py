@@ -1,3 +1,5 @@
+from django.core.paginator import Paginator
+
 from django.urls import reverse
 from django.views.generic import View
 from django.views.generic.list import ListView
@@ -58,6 +60,33 @@ class BomlistListView(ListView):
     #queryset =
     #每页显示5条
     paginate_by = 10
+
+# 从Bominfo查询bomlist明细
+class BominfoToBomlistListView(ListView):
+    #查询的模型
+    #model = Bomlist
+    #查询返回结果集，优先级最好，设置以后model失效
+    #根据bomname获取该bom的所有数据，包括器件信息，数量，位号
+    template_name = 'bom/bominfotobomlist_list.html'
+    def get_queryset(self):
+        #qs = super().get_queryset()  # 调用父类方法
+        bomname = self.request.GET.get('bomname',None)
+        #bominfo_id = Bominfo.objects.get(bomname=bomname)
+        qs = Bomlist.objects.values('material__code','material__description','material__partnumber','material__supplier__name','num','references').filter(bominfo__bomname=bomname)
+        #qs = Paginator(qs,3)  # 根据指定的每页列表大小进行分页
+        return qs
+    def get_context_data(self, **kwargs):
+        bomname = self.request.GET.get('bomname')
+        bominfo = Bominfo.objects.filter(bomname=bomname)
+        print(bominfo.first().hw_version,bominfo.first().description,bominfo.first().project,type(bominfo))
+        context = super().get_context_data(**kwargs)
+        context.update({'bomname': bomname,'hw_version':bominfo.first().hw_version,'description':bominfo.first().description,'project':bominfo.first().project})
+        return context
+    #queryset =
+    #print(queryset)
+    #每页显示5条
+    #paginator = Paginator(bominfo_bomlist_list, 10)  # 根据指定的每页列表大小进行分页
+    paginate_by = 500
 
 # 用Listview实现# 用Listview实现Ecn列表显示列表显示
 class EcnListView(ListView):

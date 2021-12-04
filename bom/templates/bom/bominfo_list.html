@@ -36,7 +36,7 @@
             <td>硬件版本</td>
             <td>配置描述</td>
             <td>隶属项目</td>
-            <td>明细</td>
+            <td>明&nbsp细</td>
         </tr>
         {% for obj in object_list %}
             <tr>
@@ -44,7 +44,7 @@
                 <td>{{ obj.hw_version }}</td>
                 <td>{{ obj.description }}</td>
                 <td>{{ obj.project }}</td>
-                <td><a href="#">明细</a></td>
+                <td><a href="../bominfotobomlistlist/?bomname={{ obj.bomname }}">查&nbsp询</a></td>
             </tr>
         {% endfor %}
         <tr>

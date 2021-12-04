@@ -1,0 +1,86 @@
+{% load static %}
+{% load filters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ bomname }}明细表</title>
+        <style>
+			table{
+				border: 1px solid black;
+				width:90%;
+				margin: 0 auto;
+				border-spacing:0 ;
+			}
+            caption{
+				text-align: center;
+                caption-side: top;
+			}
+            th{
+				border: 1px solid black;
+				text-align: center;
+			}
+			tr{
+				border: 1px solid black;
+				text-align: center;
+			}
+			td{
+				border: 1px solid black;
+
+			}
+		</style>
+</head>
+<body>
+    <table border="1" cellspacing="0">
+        <caption><h2>{{ bomname }}明细表</h2></caption>
+        <tr>
+            <td colspan="2">项目名</td>
+            <td colspan="5"><span style="float: left">{{ project }}</span></td>
+        </tr>
+        <tr>
+            <td colspan="2">BOM名</td>
+            <td colspan="5"><span style="float: left">{{ bomname }}</span></td>
+        </tr>
+        <tr>
+            <td colspan="2">硬件版本</td>
+            <td colspan="5"><span style="float: left">{{ hw_version }}</span></td>
+        </tr>
+        <tr>
+            <td colspan="2">BOM描述</td>
+            <td colspan="5"><span style="float: left">{{ description }}</span></td>
+        </tr>
+        <tr>
+            <td>序号</td>
+            <td>物料编码</td>
+            <td>物料描述</td>
+            <td>型号</td>
+            <td>供应商</td>
+            <td>数量</td>
+            <td>位号</td>
+        </tr>
+        {% for obj in object_list %}
+            <tr>
+                <td>{{ forloop.counter|counter:page_obj.number}}</td>
+
+                <td>{{ obj.material__code }}</td>
+                <td>{{ obj.material__description }}</td>
+                <td>{{ obj.material__partnumber }}</td>
+                <td>{{ obj.material__supplier__name }}</td>
+                <td>{{ obj.num }}</td>
+                <td>{{ obj.references }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="7">
+                <span style="float: left">总记录数{{ page_obj.paginator.count }}条</span>
+            </td>
+        </tr>
+        <tr>
+            {#添加返回按钮#}
+            <td colspan="7">
+                <span style="float: right"><a href="/bom/bominfolist/" >返&nbsp回</a></span>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
