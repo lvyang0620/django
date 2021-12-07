@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load static %}
+	<title>{{title}}</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'layui/css/layui.css' %}">
+	<script type="text/javascript" src="{% static 'layui/layui.js' %}"></script>
+</head>
+<body>
+  <div class="header">
+    <div class="headerLayout w1200">
+      <div class="headerCon">
+        <h1 class="mallLogo">
+          <a href="{% url 'bom:index' %}" title="企业管理系统">企业管理系统</a>
+        </h1>
+        <div class="mallSearch">
+          <form action="{% url 'bom:index' %}" method="get" class="layui-form" novalidate>
+            <input type="text" name="n" required  lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的信息">
+            <button class="layui-btn" lay-submit lay-filter="formDemo">
+                <i class="layui-icon layui-icon-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content content-nav-base {{classContent}}">
+    <div class="main-nav">
+      <div class="inner-cont0">
+        <div class="inner-cont1 w1200">
+          <div class="inner-cont2">
+            <a href="{% url 'bom:index' %}" {% if classContent == 'bom'%}class="active"{% endif %}>BOM管理</a>
+			<a href="{% url 'bom:index' %}" {% if classContent == 'commoditys'%}class="active"{% endif %}>购销管理</a>
+			<a href="{% url 'bom:index' %}" {% if classContent == 'shopcarts'%}class="active"{% endif %}>PCM管理</a>
+            <a href="{% url 'bom:index' %}" {% if classContent == 'informations'%}class="active"{% endif %}>生产管理</a>
+            <a href="{% url 'bom:index' %}" {% if classContent == 'bom'%}class="active"{% endif %}>库存管理</a>
+            <a href="{% url 'bom:index' %}" {% if classContent == 'bom'%}class="active"{% endif %}>财务管理</a>
+            <a href="{% url 'bom:index' %}" {% if classContent == 'bom'%}class="active"{% endif %}>个人中心</a>
+          </div>
+        </div>
+      </div>
+    </div>
+	{% block content %}{% endblock content %}
+  </div>
+
+{% block footer %}{% endblock footer %}
+<script type="text/javascript">{% block script %}{% endblock script %}</script>
+</body>
+</html>

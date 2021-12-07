@@ -4,8 +4,14 @@ from django.urls import reverse
 from django.views.generic import View
 from django.views.generic.list import ListView
 from django.shortcuts import render
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
 from django.http import HttpResponse, HttpResponseRedirect
 from .models  import *
+from django.http import JsonResponse
+from django.db.models import F
+
 
 # 用Listview实现Supplier列表显示
 class SupplierListView(ListView):
@@ -73,9 +79,19 @@ class EcnListView(ListView):
     model = Ecn
     paginate_by = 10
 
+#首页
 def index(request):
-    #return HttpResponse('测试index请求，id={}'.format(id))
-    return render(request,'index.html')
+    project = Project.objects.all()
+    supplier = Supplier.objects.all()
+    category = Category.objects.all()
+    return render(request,'index.html',locals())
+
+def project(request):
+    project = Project.objects.all()
+    # supplier = Supplier.objects.all()
+    # category = Category.objects.all()
+    print(project)
+    return render(request,'page_project.html',locals())
 
 #测试重定向
 def test_reverse(request,id):
