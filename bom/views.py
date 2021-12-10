@@ -124,6 +124,17 @@ def ecn(request):
     # print(category)
     return render(request,'page_ecn.html',locals())
 
+def bominfo(request):
+    # project = Project.objects.all()
+    # supplier = Supplier.objects.all()
+    # category = Category.objects.all()
+    # material = Material.objects.all()
+    # ecn = Ecn.objects.all()
+    bominfo = Bominfo.objects.all()
+    # print(category)
+    return render(request,'page_bominfo.html',locals())
+
+
 #测试重定向
 def test_reverse(request,id):
     return HttpResponse('测试重定向，id={}'.format(id))

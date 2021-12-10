@@ -19,6 +19,7 @@ urlpatterns = [
     path('materiallist/',views.MaterialtListView.as_view(),name='materiallist'),
     path('material/',views.material,name='material'),
     path('bominfolist/',views.BominfoListView.as_view(),name='bominfolist'),
+    path('bominfo/',views.bominfo,name='bominfo'),
     path('bomlistlist/',views.BomlistListView.as_view(),name='bomlistlist'),
     path('ecnlist/',views.EcnListView.as_view(),name='ecnlist'),
     path('ecn/',views.ecn,name='ecn'),
