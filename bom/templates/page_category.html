@@ -12,24 +12,22 @@
                      <div class="card border-none">
                         <div class="card-body custom-card-space">
                            <div class="d-flex align-items-center justify-content-between mb-3">
-                              <h5>项目列表</h5>
+                              <h5>物料类别表</h5>
                            </div>
                            <div class="table-responsive rounded tbl-server-info">
                               <table class="table mb-0">
                                  <thead class="text-uppercase">
                                        <tr class="ligth ligth-data">
-                                          <th>No.</th>
-                                          <th>项目名称</th>
-                                          <th>项目描述</th>
+                                          <th>类别码</th>
+                                          <th>类别名</th>
                                           <th>操作</th>
                                        </tr>
                                  </thead>
                                  <tbody class="ligth-body">
-                                 {% for proj in project %}
+                                 {% for c in category %}
                                      <tr>
-                                           <td>{{ proj.id }}</td>
-                                           <td>{{ proj.name }}</td>
-                                           <td>{{ proj.description }}</td>
+                                           <td>{{ c.code }}</td>
+                                           <td>{{ c.name }}</td>
                                            <td>
                                               <div class="dropdown">
                                                     <a class="dropdown-item" href="#">查看</a>

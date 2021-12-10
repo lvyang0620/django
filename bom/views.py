@@ -90,8 +90,39 @@ def project(request):
     project = Project.objects.all()
     # supplier = Supplier.objects.all()
     # category = Category.objects.all()
-    print(project)
+    # print(project)
     return render(request,'page_project.html',locals())
+
+def category(request):
+    # project = Project.objects.all()
+    # supplier = Supplier.objects.all()
+    category = Category.objects.all()
+    # print(category)
+    return render(request,'page_category.html',locals())
+
+def supplier(request):
+    # project = Project.objects.all()
+    supplier = Supplier.objects.all()
+    # category = Category.objects.all()
+    # print(category)
+    return render(request,'page_supplier.html',locals())
+
+def material(request):
+    # project = Project.objects.all()
+    # supplier = Supplier.objects.all()
+    # category = Category.objects.all()
+    material = Material.objects.all()
+    # print(category)
+    return render(request,'page_material.html',locals())
+
+def ecn(request):
+    # project = Project.objects.all()
+    # supplier = Supplier.objects.all()
+    # category = Category.objects.all()
+    # material = Material.objects.all()
+    ecn = Ecn.objects.all()
+    # print(category)
+    return render(request,'page_ecn.html',locals())
 
 #测试重定向
 def test_reverse(request,id):
