@@ -36,7 +36,7 @@
                                                 <td>{{ b.description }}</td>
                                                 <td>
                                                     <div class="dropdown">
-                                                        <a class="dropdown-item" href="#">查看</a>
+                                                        <a class="dropdown-item" href="{% url 'bom:bomdetail' b.bomname %}">查看</a>
                                                         <a class="dropdown-item" href="#">编辑</a>
                                                         <a class="dropdown-item" href="#">删除</a>
                                                     </div>

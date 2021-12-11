@@ -24,6 +24,7 @@ urlpatterns = [
     path('ecnlist/',views.EcnListView.as_view(),name='ecnlist'),
     path('ecn/',views.ecn,name='ecn'),
     path('bominfotobomlistlist/', views.BominfoToBomlistListView.as_view(),name='bominfotobomlistlist'),
+    path('bomdetail/<str:bomname>/', views.bomdetail,name='bomdetail'),
     path('specific_bom_detail/<str:bomname>/', bominfo_to_bomlist_views.specific_bom_detail,name='specific_bom_detail'),
 
 ]

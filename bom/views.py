@@ -134,6 +134,20 @@ def bominfo(request):
     # print(category)
     return render(request,'page_bominfo.html',locals())
 
+def bomdetail(request,bomname):
+    # project = Project.objects.all()
+    # supplier = Supplier.objects.all()
+    # category = Category.objects.all()
+    # material = Material.objects.all()
+    # ecn = Ecn.objects.all()
+    bominfo = Bominfo.objects.filter(bomname=bomname)
+    bomname = bomname
+    hw_version = bominfo.first().hw_version
+    description = bominfo.first().description
+    project = bominfo.first().project
+    bomdetail = Bomlist.objects.filter(bominfo__bomname=bomname)
+    # print(category)
+    return render(request,'page_bomdetail.html',locals())
 
 #测试重定向
 def test_reverse(request,id):
