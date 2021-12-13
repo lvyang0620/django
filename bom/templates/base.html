@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+      {% load static %}
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>管理系统</title>
+      <link rel="stylesheet" href="{% static 'css/backend-plugin.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/backend.css' %}">
+      <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/line-awesome.min.css' %}">
+      <link rel="stylesheet" href="{% static 'css/remixicon.css' %}">
+      <link rel="stylesheet" href="{% static 'css/dripicons.css' %}">
+
+      <link rel='stylesheet' href="{% static 'css/main.css' %}">
+      <link rel='stylesheet' href="{% static 'css/main1.css' %}">
+      <link rel='stylesheet' href="{% static 'css/main2.css' %}">
+      <link rel='stylesheet' href="{% static 'css/main3.css' %}">
+      <link rel="stylesheet" href="{% static 'css/mapbox-gl.css' %}">
+  </head>
+  <body class=" ">
+    <!-- Wrapper Start -->
+    <div class="wrapper">
+          <div class="two-sidebar sidebar-1  sidebar-default ">
+              <div class="iq-sidebar">
+                  <div class="data-scrollbar" data-scroll="1">
+                      <nav class="iq-sidebar-menu">
+                          <div class="tab-content">
+                              <div class="tab-pane fade active show" id="project-pan" role="tabpanel">
+                                  <div class="iq-sidebar-top">
+                                      <div class="top-menu-icon">
+                                          <h3 class="text-uppercase">BOM管理系统</h3>
+                                      </div>
+                                  </div>
+                                  <ul id="project" class="iq-menu list-inline m-0">
+                                      <li class=" ">
+                                          <a href="{% url 'bom:index' %}">
+                                              <span style="font-size:20px" >BOM管理</span>
+                                          </a>
+                                      </li>
+                                      <li class=" ">
+                                          <a href="">
+                                              <span style="font-size:20px" >购销管理</span>
+                                          </a>
+                                      </li>
+                                      <li class=" ">
+                                          <a href="">
+                                              <span style="font-size:20px" >库存管理</span>
+                                          </a>
+                                      </li>
+                                      <li class=" ">
+                                          <a href="">
+                                              <span style="font-size:20px" >PMC管理</span>
+                                          </a>
+                                      </li>
+                                      <li class=" ">
+                                          <a href="">
+                                              <span style="font-size:20px" >生产管理</span>
+                                          </a>
+                                      </li>
+                                      <li class=" ">
+                                          <a href="">
+                                              <span style="font-size:20px" >财务管理</span>
+                                          </a>
+                                      </li>
+                                      <li class=" ">
+                                          <a href="">
+                                              <span style="font-size:20px" >个人中心</span>
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </nav>
+                  </div>
+              </div>
+          </div>
+
+          <div class="iq-top-navbar">
+              <div class="iq-navbar-custom">
+                  <nav class="navbar navbar-expand-lg navbar-light p-0">
+                      <div class="iq-search-bar device-search">
+                          <form>
+                              <div class="input-prepend input-append">
+                                  <div class="btn-group">
+                                      <label class="dropdown-toggle searchbox" data-toggle="dropdown">
+                                      <input class="dropdown-toggle search-query text search-input" type="text" placeholder="Type here to search..."><span class="search-replace"></span>
+                                      <a class="search-link" href="#"><i class="ri-search-line"></i></a>
+                                      <span class="caret"><!--icon--></span>
+                                      </label>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+
+                  </nav>
+              </div>
+          </div>
+        {% block content %}{% endblock content %}
+    </div>
+    <!-- Wrapper End-->
+    {% block footer %}{% endblock footer %}
+    <script type="text/javascript">{% block script %}{% endblock script %}</script>
+  </body>
+</html>

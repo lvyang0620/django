@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+<!-- page content Start -->
+{% block content %}
+    <div class="content-page">
+{#     <div class="container-fluid">#}
+{#        <div class="row">#}
+{##}
+{#            <div class="col-lg-12">#}
+{##}
+{#               <div class="tab-content task-content">#}
+{#                  <div class="tab-pane fade show active" id="resources" role="tabpanel">                     #}
+{#                     <div class="card border-none">#}
+{#                        <div class="card-body custom-card-space">#}
+                           <div class="d-flex align-items-center justify-content-between mb-3">
+                              <h5>ECN汇总</h5>
+                           </div>
+{#                           <div class="table-responsive rounded tbl-server-info">#}
+                              <table width="100%" border="1" cellspacing="1" cellpadding="0">
+                                 <thead class="text-uppercase">
+                                       <tr class="ligth ligth-data" align="center">
+                                            <th>ID</th>
+                                            <th>变更内容</th>
+                                            <th>执行状态</th>
+                                            <th>变更原因</th>
+                                            <th>创建时间</th>
+                                            <th>执行方式</th>
+                                            <th>发起人</th>
+                                            <th>关联BOM名</th>
+                                            <th>操作</th>
+                                       </tr>
+                                 </thead>
+                                 <tbody class="ligth-body">
+                                 {% for e in ecn %}
+                                     <tr>
+                                            <td>{{ e.id }}</td>
+                                            <td>{{ e.content }}</td>
+                                            <td>{{ e.get_state_display }}</td>
+                                            <td>{{ e.reason }}</td>
+                                            <td>{{ e.createtime }}</td>
+                                            <td>{{ e.get_action_display }}</td>
+                                            <td>{{ e.createdby }}</td>
+                                            <td>{{ e.bominfo.bomname }}</td>
+                                            <td>
+                                                <div style="float:right;">
+                                                    <a href="#">查看</a>
+                                                    <a href="#">编辑</a>
+                                                    <a href="#">删除</a>
+                                                </div>
+                                           </td>
+                                     </tr>
+                                 {% endfor %}
+                                    {#分页展示#}
+                                    <tr>
+                                        <td colspan="9">
+                                            {#首页#}
+                                            <a href="?page=1" aria-label="Next"><span aria-hidden="true">首页</span></a>
+                                            {#has_previous 判断是否有上一页#}
+                                            {% if ecn.has_previous %}
+                                                {#previous_page_number 上一页的页码#}
+                                                <a href="?page={{ ecn.previous_page_number }}" aria-label="Previous"><span
+                                                        aria-hidden="true">上一页</span></a>
+                                            {% else %}
+                                                {#class="disabled" 禁止用户点击#}
+                                                <a href="" aria-label="Previous"><span aria-hidden="true">上一页</span></a>
+                                            {% endif %}
+                                            {#遍历页码的列表#}
+                                            {% for i in page_range %}
+                                                {#判断当前页码数等于底部页码时#}
+                                                {% if current_page_num == i %}
+                                                    {#增加class,加深按钮#}
+                                                    <a href="?page={{ i }}">{{ i }}</a>
+                                                {% else %}
+                                                    {#href参数为简写,它会自动获取当前路径，并拼接参数#}
+                                                    <a href="?page={{ i }}">{{ i }}</a>
+                                                {% endif %}
+                                            {% endfor %}
+                                            {#has_next 判断是否有下一页#}
+                                            {% if ecn.has_next %}
+                                                {#next_page_number 下一页的页码#}
+                                                <a href="?page={{ ecn.next_page_number }}" aria-label="Next"><span
+                                                        aria-hidden="true">下一页</span></a>
+                                            {% else %}
+                                                {#class="disabled" 禁止用户点击#}
+                                                <a href="" aria-label="Next"><span aria-hidden="true">下一页</span></a>
+                                            {% endif %}
+                                            <a href="?page={{ paginator.num_pages }}" aria-label="Next"><span aria-hidden="true">最后一页</span></a>
+                                            <span style="float: right">第{{ current_page_num }}/{{ paginator.num_pages }}页</span>
+                                            <span style="float: right">共{{ paginator.count }}条记录，</span>
+                                        </td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+{#                           </div>#}
+{#                        </div>#}
+{#                     </div>#}
+{#                  </div>#}
+{#               </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <!-- Page end  -->#}
+{#	 </div>#}
+    </div>
+{% endblock content %}
+<!-- page content end  -->

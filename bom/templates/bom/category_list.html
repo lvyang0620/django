@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>物料分类列表</title>
+        <style>
+			table{
+				border: 1px solid black;
+				width:90%;
+				margin: 0 auto;
+				border-spacing:0 ;
+			}
+            caption{
+				text-align: center;
+                caption-side: top;
+			}
+            th{
+				border: 1px solid black;
+				text-align: center;
+			}
+			tr{
+				border: 1px solid black;
+				text-align: center;
+			}
+			td{
+				border: 1px solid black;
+
+			}
+		</style>
+</head>
+<body>
+    <table border="1" cellspacing="0">
+        <caption><h2>物料分类信息</h2></caption>
+        <tr>
+            <td>类别编码</td>
+            <td>类别名称</td>
+        </tr>
+        {% for obj in object_list %}
+            <tr>
+                <td>{{ obj.code }}</td>
+                <td>{{ obj.name }}</td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="2">
+                <span style="float: left">共{{ page_obj.paginator.num_pages }}页，第{{ page_obj.number }}页</span>
+                <span style="padding-left: 50px">
+                    {% if page_obj.has_previous %}
+                        <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+                    {% endif %}
+                    {% for num in page_obj.paginator.page_range %}
+                        <a href="?page={{ num }}">{{ num }}</a>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+                    {% endif %}
+                </span>
+                <span style="float: right">总记录数{{ page_obj.paginator.count }}条</span>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

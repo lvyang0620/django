@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load filters %}
+<!-- page content Start -->
+{% block content %}
+    <div class="content-page">
+         <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                   <div class="tab-content task-content">
+                      <div class="tab-pane fade show active" id="resources" role="tabpanel">
+                         <div class="card border-none">
+                            <div class="card-body custom-card-space">
+                               <div class="d-flex align-items-center justify-content-between mb-3">
+                                  <h5>{{ bomname }}明细</h5>
+                               </div>
+                               <div class="table-responsive rounded tbl-server-info">
+                                  <table class="table mb-0">
+                                      <tr>
+                                          <td colspan="2">项目名</td>
+                                          <td colspan="6"><span style="float: left">{{ project }}</span></td>
+                                      </tr>
+                                      <tr>
+                                          <td colspan="2">BOM名</td>
+                                          <td colspan="6"><span style="float: left">{{ bomname }}</span></td>
+                                      </tr>
+                                      <tr>
+                                          <td colspan="2">硬件版本</td>
+                                          <td colspan="6"><span style="float: left">{{ hw_version }}</span></td>
+                                      </tr>
+                                      <tr>
+                                          <td colspan="2">BOM描述</td>
+                                          <td colspan="6"><span style="float: left">{{ description }}</span></td>
+                                      </tr>
+                                           <tr class="ligth ligth-data">
+                                                <td>序号</td>
+                                                <td>物料编码</td>
+                                                <td>物料描述</td>
+                                                <td>型号</td>
+                                                <td>供应商</td>
+                                                <td>数量</td>
+                                                <td>位号</td>
+                                                <td>操作</td>
+                                           </tr>
+                                     {% for d in bomdetail %}
+                                         <tr>
+                                                <td>{{ 1 }}</td>
+                                                <td>{{ d.material.code }}</td>
+                                                <td>{{ d.material.description }}</td>
+                                                <td>{{ d.material.partnumber }}</td>
+                                                <td>{{ d.material.supplier.name }}</td>
+                                                <td>{{ d.num }}</td>
+                                                <td>{{ d.references }}</td>
+                                                <td>
+                                                    <div class="dropdown">
+                                                        <a class="dropdown-item" href="#">查看</a>
+                                                        <a class="dropdown-item" href="#">编辑</a>
+                                                        <a class="dropdown-item" href="#">删除</a>
+                                                    </div>
+                                                </td>
+                                         </tr>
+                                     {% endfor %}
+                                  </table>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+            </div>
+         </div>
+    </div>
+{% endblock content %}
+<!-- page content end  -->
