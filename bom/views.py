@@ -88,23 +88,41 @@ def index(request):
 
 def project(request):
     project = Project.objects.all()
-    # supplier = Supplier.objects.all()
-    # category = Category.objects.all()
-    # print(project)
+    paginator = Paginator(project, 10)  # 根据指定的每页列表大小进行分页
+    try:
+        current_page_num = int(request.GET.get('page', 1))  # 根据url获取当前页，没有时取1
+        project = paginator.page(current_page_num)  # 根据页数获取特定页的列表
+        page_num = paginator.num_pages
+        page_range = paginator.page_range
+    except EmptyPage:
+        project = paginator.page(1)
     return render(request,'page_project.html',locals())
 
 def category(request):
     # project = Project.objects.all()
     # supplier = Supplier.objects.all()
     category = Category.objects.all()
-    # print(category)
+    paginator = Paginator(category, 10)  # 根据指定的每页列表大小进行分页
+    try:
+        current_page_num = int(request.GET.get('page', 1))  # 根据url获取当前页，没有时取1
+        category = paginator.page(current_page_num)  # 根据页数获取特定页的列表
+        page_num = paginator.num_pages
+        page_range = paginator.page_range
+    except EmptyPage:
+        category = paginator.page(1)
     return render(request,'page_category.html',locals())
 
 def supplier(request):
     # project = Project.objects.all()
     supplier = Supplier.objects.all()
-    # category = Category.objects.all()
-    # print(category)
+    paginator = Paginator(supplier, 10)  # 根据指定的每页列表大小进行分页
+    try:
+        current_page_num = int(request.GET.get('page', 1))  # 根据url获取当前页，没有时取1
+        supplier = paginator.page(current_page_num)  # 根据页数获取特定页的列表
+        page_num = paginator.num_pages
+        page_range = paginator.page_range
+    except EmptyPage:
+        supplier = paginator.page(1)
     return render(request,'page_supplier.html',locals())
 
 def material(request):
@@ -112,7 +130,14 @@ def material(request):
     # supplier = Supplier.objects.all()
     # category = Category.objects.all()
     material = Material.objects.all()
-    # print(category)
+    paginator = Paginator(material, 10)  # 根据指定的每页列表大小进行分页
+    try:
+        current_page_num = int(request.GET.get('page', 1))  # 根据url获取当前页，没有时取1
+        material = paginator.page(current_page_num)  # 根据页数获取特定页的列表
+        page_num = paginator.num_pages
+        page_range = paginator.page_range
+    except EmptyPage:
+        material = paginator.page(1)
     return render(request,'page_material.html',locals())
 
 def ecn(request):
@@ -121,7 +146,14 @@ def ecn(request):
     # category = Category.objects.all()
     # material = Material.objects.all()
     ecn = Ecn.objects.all()
-    # print(category)
+    paginator = Paginator(ecn, 10)  # 根据指定的每页列表大小进行分页
+    try:
+        current_page_num = int(request.GET.get('page', 1))      # 根据url获取当前页，没有时取1
+        ecn = paginator.page(current_page_num)  # 根据页数获取特定页的列表
+        page_num = paginator.num_pages
+        page_range = paginator.page_range
+    except EmptyPage:
+        ecn = paginator.page(1)
     return render(request,'page_ecn.html',locals())
 
 def bominfo(request):
@@ -131,7 +163,14 @@ def bominfo(request):
     # material = Material.objects.all()
     # ecn = Ecn.objects.all()
     bominfo = Bominfo.objects.all()
-    # print(category)
+    paginator = Paginator(bominfo, 10)  # 根据指定的每页列表大小进行分页
+    try:
+        current_page_num = int(request.GET.get('page', 1))      # 根据url获取当前页，没有时取1
+        bominfo = paginator.page(current_page_num)  # 根据页数获取特定页的列表
+        page_num = paginator.num_pages
+        page_range = paginator.page_range
+    except EmptyPage:
+        bominfo = paginator.page(1)
     return render(request,'page_bominfo.html',locals())
 
 def bomdetail(request,bomname):
