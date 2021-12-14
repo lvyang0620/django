@@ -98,6 +98,39 @@ def project(request):
         project = paginator.page(1)
     return render(request,'page_project.html',locals())
 
+def project_edit(request,id):
+    # id = id
+    project = Project.objects.get(id=id)
+    # print(project.name,project.description)
+    return render(request,'page_project_edit.html',locals())
+
+
+def project_handle(request):
+    if request.POST:
+        if 'modify' in request.POST:
+            id = request.POST.get('id')
+            name = request.POST.get('name')
+            description = request.POST.get('description')
+            print(id,name,description)
+            Project.objects.filter(id=id).update(name=name,description=description)
+        if 'del' in request.POST:
+            id = request.POST.get('id')
+            print(id)
+            Project.objects.filter(id=id).delete()
+
+        project = Project.objects.all()
+        paginator = Paginator(project, 10)  # 根据指定的每页列表大小进行分页
+        try:
+            current_page_num = int(request.GET.get('page', 1))  # 根据url获取当前页，没有时取1
+            project = paginator.page(current_page_num)  # 根据页数获取特定页的列表
+            page_num = paginator.num_pages
+            page_range = paginator.page_range
+        except EmptyPage:
+            project = paginator.page(1)
+        return render(request,'page_project.html',locals())
+    else:
+        return HttpResponse('POST提交错误')
+
 def category(request):
     # project = Project.objects.all()
     # supplier = Supplier.objects.all()
