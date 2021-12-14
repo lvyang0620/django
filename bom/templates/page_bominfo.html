@@ -3,78 +3,86 @@
 {% block content %}
     <div class="content-page">
        <div class="d-flex align-items-center justify-content-between mb-3">
-           <h5>BOM信息汇总</h5>
+           <h5>项目BOM汇总</h5>
            <a href="{% url 'bom:index' %}" ><span style="float:right;"><h5>返回</h5></span></a>
        </div>
-        <table width="100%" border="1" cellspacing="1" cellpadding="0">
-             <thead class="text-uppercase">
-                   <tr class="ligth ligth-data" align="center">
-                       <th>ID</th>
-                       <th>项目</th>
-                       <th>BOM名称</th>
-                       <th>硬件版本</th>
-                       <th>配置描述</th>
-                       <th>操作</th>
-                   </tr>
-             </thead>
-             <tbody class="ligth-body">
-             {% for b in bominfo %}
-                 <tr>
-                        <td>{{ b.id }}</td>
-                        <td>{{ b.project }}</td>
-                        <td>{{ b.bomname }}</td>
-                        <td>{{ b.hw_version }}</td>
-                        <td>{{ b.description }}</td>
-                        <td>
-                            <div align="center">
-                                <a href="{% url 'bom:bomdetail' b.bomname %}">查看</a>
-                                <a href="#">编辑</a>
-                                <a href="#">删除</a>
-                            </div>
-                        </td>
-                 </tr>
-             {% endfor %}
-            {#分页展示#}
-            <tr>
-                <td colspan="6">
-                    {#首页#}
-                    <a href="?page=1" aria-label="Next"><span aria-hidden="true">首页</span></a>
-                    {#has_previous 判断是否有上一页#}
-                    {% if bominfo.has_previous %}
-                        {#previous_page_number 上一页的页码#}
-                        <a href="?page={{ bominfo.previous_page_number }}" aria-label="Previous"><span
-                                aria-hidden="true">上一页</span></a>
-                    {% else %}
-                        {#class="disabled" 禁止用户点击#}
-                        <a href="" aria-label="Previous"><span aria-hidden="true">上一页</span></a>
-                    {% endif %}
-                    {#遍历页码的列表#}
-                    {% for i in page_range %}
-                        {#判断当前页码数等于底部页码时#}
-                        {% if current_page_num == i %}
-                            {#增加class,加深按钮#}
-                            <a href="?page={{ i }}">{{ i }}</a>
+        {% for proj in project %}
+           <div class="d-flex align-items-center justify-content-between mb-3">
+               <h5>{{ proj.name }}</h5>
+           </div>
+
+            <table width="100%" border="1" cellspacing="1" cellpadding="0" style="table-layout: auto;" >
+                 <thead class="text-uppercase">
+                       <tr class="ligth ligth-data" align="center">
+                           <th>ID</th>
+                           <th>硬件版本</th>
+                           <th>BOM名称</th>
+                           <th>配置描述</th>
+                           <th>操作</th>
+                       </tr>
+                 </thead>
+                 <tbody class="ligth-body">
+                 {% for b in bominfo %}
+                     {% if b.project == proj %}
+                         <tr>
+                                <td width="30" align="center" >{{ b.id }}</td>
+                                <td width="80" align="center" >{{ b.hw_version }}</td>
+                                <td width="180" align="center" >{{ b.bomname }}</td>
+                                <td>{{ b.description }}</td>
+                                <td width="120" align="center" >
+                                    <div align="center">
+                                        <a href="{% url 'bom:bomdetail' b.bomname %}">查看</a>
+                                        <a href="#">编辑</a>
+                                        <a href="#">删除</a>
+                                    </div>
+                                </td>
+                         </tr>
+                     {% endif %}
+                 {% endfor %}
+                {#分页展示#}
+                <tr>
+                    <td colspan="5">
+                        {#首页#}
+                        <a href="?page=1" aria-label="Next"><span aria-hidden="true">首页</span></a>
+                        {#has_previous 判断是否有上一页#}
+                        {% if bominfo.has_previous %}
+                            {#previous_page_number 上一页的页码#}
+                            <a href="?page={{ bominfo.previous_page_number }}" aria-label="Previous"><span
+                                    aria-hidden="true">上一页</span></a>
                         {% else %}
-                            {#href参数为简写,它会自动获取当前路径，并拼接参数#}
-                            <a href="?page={{ i }}">{{ i }}</a>
+                            {#class="disabled" 禁止用户点击#}
+                            <a href="" aria-label="Previous"><span aria-hidden="true">上一页</span></a>
                         {% endif %}
-                    {% endfor %}
-                    {#has_next 判断是否有下一页#}
-                    {% if bominfo.has_next %}
-                        {#next_page_number 下一页的页码#}
-                        <a href="?page={{ bominfo.next_page_number }}" aria-label="Next"><span
-                                aria-hidden="true">下一页</span></a>
-                    {% else %}
-                        {#class="disabled" 禁止用户点击#}
-                        <a href="" aria-label="Next"><span aria-hidden="true">下一页</span></a>
-                    {% endif %}
-                    <a href="?page={{ paginator.num_pages }}" aria-label="Next"><span aria-hidden="true">最后一页</span></a>
-                    <span style="float: right">第{{ current_page_num }}/{{ paginator.num_pages }}页</span>
-                    <span style="float: right">共{{ paginator.count }}条记录，</span>
-                </td>
-            </tr>
-             </tbody>
-          </table>
+                        {#遍历页码的列表#}
+                        {% for i in page_range %}
+                            {#判断当前页码数等于底部页码时#}
+                            {% if current_page_num == i %}
+                                {#增加class,加深按钮#}
+                                <a href="?page={{ i }}">{{ i }}</a>
+                            {% else %}
+                                {#href参数为简写,它会自动获取当前路径，并拼接参数#}
+                                <a href="?page={{ i }}">{{ i }}</a>
+                            {% endif %}
+                        {% endfor %}
+                        {#has_next 判断是否有下一页#}
+                        {% if bominfo.has_next %}
+                            {#next_page_number 下一页的页码#}
+                            <a href="?page={{ bominfo.next_page_number }}" aria-label="Next"><span
+                                    aria-hidden="true">下一页</span></a>
+                        {% else %}
+                            {#class="disabled" 禁止用户点击#}
+                            <a href="" aria-label="Next"><span aria-hidden="true">下一页</span></a>
+                        {% endif %}
+                        <a href="?page={{ paginator.num_pages }}" aria-label="Next"><span aria-hidden="true">最后一页</span></a>
+                        <span style="float: right">第{{ current_page_num }}/{{ paginator.num_pages }}页</span>
+                        <span style="float: right">共{{ paginator.count }}条记录，</span>
+                    </td>
+                </tr>
+                 </tbody>
+              </table>
+            <br>
+        {% endfor %}
     </div>
+
 {% endblock content %}
 <!-- page content end  -->

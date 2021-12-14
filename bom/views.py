@@ -157,7 +157,8 @@ def ecn(request):
     return render(request,'page_ecn.html',locals())
 
 def bominfo(request):
-    # project = Project.objects.all()
+    project = Project.objects.all()
+    print(project)
     # supplier = Supplier.objects.all()
     # category = Category.objects.all()
     # material = Material.objects.all()
@@ -185,7 +186,14 @@ def bomdetail(request,bomname):
     description = bominfo.first().description
     project = bominfo.first().project
     bomdetail = Bomlist.objects.filter(bominfo__bomname=bomname)
-    # print(category)
+    paginator = Paginator(bomdetail, 10)  # 根据指定的每页列表大小进行分页
+    try:
+        current_page_num = int(request.GET.get('page', 1))  # 根据url获取当前页，没有时取1
+        bomdetail = paginator.page(current_page_num)  # 根据页数获取特定页的列表
+        page_num = paginator.num_pages
+        page_range = paginator.page_range
+    except EmptyPage:
+        bomdetail = paginator.page(1)
     return render(request,'page_bomdetail.html',locals())
 
 #测试重定向
