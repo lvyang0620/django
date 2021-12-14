@@ -158,13 +158,13 @@ def ecn(request):
 
 def bominfo(request):
     project = Project.objects.all()
-    print(project)
+    # print(project)
     # supplier = Supplier.objects.all()
     # category = Category.objects.all()
     # material = Material.objects.all()
     # ecn = Ecn.objects.all()
-    bominfo = Bominfo.objects.all()
-    paginator = Paginator(bominfo, 10)  # 根据指定的每页列表大小进行分页
+    bominfo = Bominfo.objects.all().order_by('id')
+    paginator = Paginator(bominfo, 500)  # 分页先设为500，咱不分页，后续完善
     try:
         current_page_num = int(request.GET.get('page', 1))      # 根据url获取当前页，没有时取1
         bominfo = paginator.page(current_page_num)  # 根据页数获取特定页的列表
