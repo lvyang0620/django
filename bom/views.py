@@ -166,6 +166,45 @@ def supplier(request):
         supplier = paginator.page(1)
     return render(request,'page_supplier.html',locals())
 
+#添加供应商信息
+def supplier_add(request):
+    # supplier = Supplier.objects.get(code=code)
+    return render(request,'page_supplier_add.html',locals())
+#供应商信息编辑
+def supplier_edit(request,code):
+    supplier = Supplier.objects.get(code=code)
+    return render(request,'page_supplier_edit.html',locals())
+#处理供应商信息编辑表单
+def supplier_handle(request):
+    if request.POST:
+        if 'add' in request.POST:
+            code = request.POST.get('code')
+            name = request.POST.get('name')
+            contacts_name = request.POST.get('contacts_name')
+            contacts_phone = request.POST.get('contacts_phone')
+            contacts_position = request.POST.get('contacts_position')
+            address = request.POST.get('address')
+            isvalid = request.POST.get('isvalid')
+            # print(code,name,isvalid)
+            Supplier.objects.update_or_create(code=code, name=name, contacts_name=contacts_name, contacts_phone=contacts_phone, contacts_position=contacts_position, address=address, isvalid=isvalid)
+        if 'modify' in request.POST:
+            code = request.POST.get('code')
+            name = request.POST.get('name')
+            contacts_name = request.POST.get('contacts_name')
+            contacts_phone = request.POST.get('contacts_phone')
+            contacts_position = request.POST.get('contacts_position')
+            address = request.POST.get('address')
+            isvalid = request.POST.get('isvalid')
+            # print(code,name,isvalid)
+            Supplier.objects.filter(code=code).update(name=name, contacts_name=contacts_name, contacts_phone=contacts_phone, contacts_position=contacts_position, address=address)
+        if 'del' in request.POST:
+            code = request.POST.get('code')
+            Supplier.objects.filter(code=code).delete()
+
+        return HttpResponseRedirect(reverse('bom:supplier'))
+    else:
+        return HttpResponse('POST提交错误')
+
 def material(request):
     # project = Project.objects.all()
     # supplier = Supplier.objects.all()

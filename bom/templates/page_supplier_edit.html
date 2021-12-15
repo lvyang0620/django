@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+<!-- page content Start -->
+{% block content %}
+	<div class="content-page">
+       <div class="d-flex align-items-center justify-content-between mb-3">
+           <h5>{{ supplier.name }}</h5>
+           <a href="{% url 'bom:supplier' %}" ><span style="float:right;"><h5>返回</h5></span></a>
+       </div>
+        <div>
+            <form method="post" action="{% url 'bom:supplier_handle' %}">
+                {% csrf_token %}
+                <label>供应商编码：</label><input style="width: 300px" name="code" readonly value="{{ supplier.code }}"><br>
+                <label>供应商名称：</label><input style="width: 300px" name="name" value="{{ supplier.name }}"><br>
+                <label>联系人姓名：</label><input style="width: 300px" name="contacts_name" value="{{ supplier.contacts_name }}"><br>
+                <label>联&nbsp;系&nbsp;电&nbsp;话&nbsp;：</label><input style="width: 300px" name="contacts_phone" value="{{ supplier.contacts_phone }}"><br>
+                <label>联系人职位：</label><input style="width: 300px" name="contacts_position" value="{{ supplier.contacts_position }}"><br>
+                <label>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址&nbsp;：<textarea style="width: 300px;height: 100px" name="address">{{ supplier.address }}</textarea><br>
+                <label>有&nbsp;效&nbsp;状&nbsp;态&nbsp;：</label><input style="width: 300px" name="isvalid" value="{{ supplier.get_isvalid_display }}"><br><br>
+                <input type="submit" style="width: 120px" name="del" value="删  除">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input type="submit" style="width: 120px" name="modify" value="保  存">
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+<!-- page content end  -->
