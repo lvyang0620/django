@@ -113,16 +113,6 @@ def project_handle(request):
             id = request.POST.get('id')
             Project.objects.filter(id=id).delete()
 
-        # project = Project.objects.all()
-        # paginator = Paginator(project, 10)  # 根据指定的每页列表大小进行分页
-        # try:
-        #     current_page_num = int(request.GET.get('page', 1))  # 根据url获取当前页，没有时取1
-        #     project = paginator.page(current_page_num)  # 根据页数获取特定页的列表
-        #     page_num = paginator.num_pages
-        #     page_range = paginator.page_range
-        # except EmptyPage:
-        #     project = paginator.page(1)
-        # return render(request,'page_project.html',locals())
         return HttpResponseRedirect(reverse('bom:project'))
     else:
         return HttpResponse('POST提交错误')
@@ -130,7 +120,7 @@ def project_handle(request):
 def category(request):
     # project = Project.objects.all()
     # supplier = Supplier.objects.all()
-    category = Category.objects.all()
+    category = Category.objects.all().order_by('code')
     paginator = Paginator(category, 10)  # 根据指定的每页列表大小进行分页
     try:
         current_page_num = int(request.GET.get('page', 1))  # 根据url获取当前页，没有时取1
@@ -140,6 +130,28 @@ def category(request):
     except EmptyPage:
         category = paginator.page(1)
     return render(request,'page_category.html',locals())
+
+#分类信息编辑
+def category_edit(request,code):
+    category = Category.objects.get(code=code)
+    return render(request,'page_category_edit.html',locals())
+
+#处理分类信息编辑表单
+def category_handle(request):
+    if request.POST:
+        if 'modify' in request.POST:
+            code = request.POST.get('code')
+            name = request.POST.get('name')
+            isvalid = request.POST.get('isvalid')
+            print(code,name,isvalid)
+            Category.objects.filter(code=code).update(name=name, isvalid=isvalid)
+        if 'del' in request.POST:
+            code = request.POST.get('code')
+            Category.objects.filter(code=code).delete()
+
+        return HttpResponseRedirect(reverse('bom:category'))
+    else:
+        return HttpResponse('POST提交错误')
 
 def supplier(request):
     # project = Project.objects.all()

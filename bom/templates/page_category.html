@@ -9,9 +9,10 @@
       <table width="100%" border="1" cellspacing="1" cellpadding="0">
          <thead class="text-uppercase">
                <tr class="ligth ligth-data" align="center">
-                  <th>类别码</th>
-                  <th>类别名</th>
-                  <th>操作</th>
+                   <th>类别码</th>
+                   <th>类别名</th>
+                   <th>有效状态</th>
+                   <th>操作</th>
                </tr>
          </thead>
          <tbody class="ligth-body">
@@ -19,10 +20,10 @@
              <tr>
                    <td>{{ c.code }}</td>
                    <td>{{ c.name }}</td>
+                    <td>{{ c.get_isvalid_display }}</td>
                    <td align="center">
                       <div>
-                            <a href="#">查看</a>
-                            <a href="#">编辑</a>
+                            <a href="{% url 'bom:category_edit' c.code %}">编辑</a>
                             <a href="#">删除</a>
                       </div>
                    </td>
