@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+<!-- page content Start -->
+{% block content %}
+	<div class="content-page">
+       <div class="d-flex align-items-center justify-content-between mb-3">
+           <h5>{{ material.code }}</h5>
+           <a href="{% url 'bom:material' %}" ><span style="float:right;"><h5>返回</h5></span></a>
+       </div>
+        <div>
+            <form method="post" action="{% url 'bom:material_handle' %}">
+                {% csrf_token %}
+                <label>物料编码：</label><input style="width: 300px" name="code" readonly value="{{ material.code }}"><br>
+                <label>物料描述：</label><textarea style="width: 300px;height: 100px" name="description">{{ material.description }}</textarea><br>
+                <label>物料型号：</label><input style="width: 300px" name="partnumber" value="{{ material.partnumber }}"><br>
+                <label>是否有效：</label><input style="width: 300px" name="isvalid" value="{{ material.isvalid }}"><br>
+                <label>物料标记：</label><input style="width: 300px" name="flag" value="{{ material.flag }}"><br>
+                <label>供应商名：</label><input style="width: 300px" name="supplier" value="{{ material.supplier }}"><br>
+                <label>所属类别：</label><input style="width: 300px" name="category" value="{{ material.category }}"><br><br>
+                <input type="submit" style="width: 120px" name="del" value="删  除">
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <input type="submit" style="width: 120px" name="modify" value="保  存">
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+<!-- page content end  -->

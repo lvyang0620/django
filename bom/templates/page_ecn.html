@@ -4,6 +4,9 @@
     <div class="content-page">
        <div class="d-flex align-items-center justify-content-between mb-3">
            <h5>ECN汇总</h5>
+           <a href="{% url 'bom:ecn_add' %}" ><span style="float:left;"><h5>添加</h5></span></a>
+           <a href="" ><span style="float:left;"><h5>导入</h5></span></a>
+           <a href="" ><span style="float:left;"><h5>导出</h5></span></a>
            <a href="{% url 'bom:index' %}" ><span style="float:right;"><h5>返回</h5></span></a>
        </div>
           <table width="100%" border="1" cellspacing="1" cellpadding="0">
@@ -33,9 +36,8 @@
                         <td>{{ e.bominfo.bomname }}</td>
                         <td>
                             <div style="float:right;">
-                                <a href="#">查看</a>
-                                <a href="#">编辑</a>
-                                <a href="#">删除</a>
+                                <a href="{% url 'bom:ecn_edit' e.id %}">编辑</a>
+                                <a href="{% url 'bom:ecn_del' e.id %}">删除</a>
                             </div>
                        </td>
                  </tr>

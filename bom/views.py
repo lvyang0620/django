@@ -233,7 +233,7 @@ def supplier_handle(request):
         return HttpResponseRedirect(reverse('bom:supplier'))
     else:
         return HttpResponse('POST提交错误')
-
+#删除供应商
 def supplier_del(request,code):
     try:
         Supplier.objects.filter(code=code).delete()
@@ -242,9 +242,6 @@ def supplier_del(request,code):
         return HttpResponse('删除数据错误')
 
 def material(request):
-    # project = Project.objects.all()
-    # supplier = Supplier.objects.all()
-    # category = Category.objects.all()
     material = Material.objects.all()
     paginator = Paginator(material, 10)  # 根据指定的每页列表大小进行分页
     try:
@@ -256,11 +253,53 @@ def material(request):
         material = paginator.page(1)
     return render(request,'page_material.html',locals())
 
+#添加供应商信息
+def material_add(request):
+    return render(request,'page_material_add.html',locals())
+#供应商信息编辑
+def material_edit(request,code):
+    material = Material.objects.get(code=code)
+    return render(request,'page_material_edit.html',locals())
+#处理供应商信息编辑表单
+def material_handle(request):
+    if request.POST:
+        if 'add' in request.POST:
+            code = request.POST.get('code')
+            description = request.POST.get('description')
+            partnumber = request.POST.get('partnumber')
+            isvalid = request.POST.get('isvalid')
+            flag = request.POST.get('flag')
+            supplier = request.POST.get('supplier')
+            category = request.POST.get('category')
+            # print(code,name,isvalid)
+            Material.objects.update_or_create(code=code, description=description, partnumber=partnumber, isvalid=isvalid, flag=flag)
+        if 'modify' in request.POST:
+            code = request.POST.get('code')
+            description = request.POST.get('description')
+            partnumber = request.POST.get('partnumber')
+            isvalid = request.POST.get('isvalid')
+            flag = request.POST.get('flag')
+            supplier = request.POST.get('supplier')
+            category = request.POST.get('category')
+            # print(code,name,isvalid)
+            Material.objects.filter(code=code).update(description=description, partnumber=partnumber, isvalid=isvalid, flag=flag)
+        if 'del' in request.POST:
+            code = request.POST.get('code')
+            Material.objects.filter(code=code).delete()
+
+        return HttpResponseRedirect(reverse('bom:material'))
+    else:
+        return HttpResponse('POST提交错误')
+#删除供应商
+def material_del(request,code):
+    try:
+        Material.objects.filter(code=code).delete()
+        return HttpResponseRedirect(reverse('bom:material'))
+    except Exception as e:
+        return HttpResponse('删除数据错误')
+
+#ecn列表显示
 def ecn(request):
-    # project = Project.objects.all()
-    # supplier = Supplier.objects.all()
-    # category = Category.objects.all()
-    # material = Material.objects.all()
     ecn = Ecn.objects.all()
     paginator = Paginator(ecn, 10)  # 根据指定的每页列表大小进行分页
     try:
@@ -271,6 +310,50 @@ def ecn(request):
     except EmptyPage:
         ecn = paginator.page(1)
     return render(request,'page_ecn.html',locals())
+
+#添加ECN
+def ecn_add(request):
+    return render(request,'page_ecn_add.html',locals())
+#编辑ECN
+def ecn_edit(request,id):
+    ecn = Ecn.objects.get(id=id)
+    return render(request,'page_ecn_edit.html',locals())
+#处理ECN表单
+def ecn_handle(request):
+    if request.POST:
+        if 'add' in request.POST:
+            content = request.POST.get('content')
+            state = request.POST.get('state')
+            reason = request.POST.get('reason')
+            createtime = request.POST.get('createtime')
+            action = request.POST.get('action')
+            createdby = request.POST.get('createdby')
+            # print(code,name,isvalid)
+            Ecn.objects.update_or_create(content=content, state=state, reason=reason, createtime=createtime, action=action, createdby=createdby)
+        if 'modify' in request.POST:
+            id = request.POST.get('id')
+            content = request.POST.get('content')
+            state = request.POST.get('state')
+            reason = request.POST.get('reason')
+            createtime = request.POST.get('createtime')
+            action = request.POST.get('action')
+            createdby = request.POST.get('createdby')
+            # print(code,name,isvalid)
+            Ecn.objects.filter(id=id).update(content=content, state=state, reason=reason, createtime=createtime, action=action, createdby=createdby)
+        if 'del' in request.POST:
+            id = request.POST.get('id')
+            Ecn.objects.filter(id=id).delete()
+
+        return HttpResponseRedirect(reverse('bom:ecn'))
+    else:
+        return HttpResponse('POST提交错误')
+#删除ECN
+def ecn_del(request,id):
+    try:
+        Ecn.objects.filter(id=id).delete()
+        return HttpResponseRedirect(reverse('bom:ecn'))
+    except Exception as e:
+        return HttpResponse('删除数据错误')
 
 def bominfo(request):
     project = Project.objects.all()

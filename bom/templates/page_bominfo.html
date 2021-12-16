@@ -4,13 +4,18 @@
     <div class="content-page">
        <div class="d-flex align-items-center justify-content-between mb-3">
            <h5>项目BOM汇总</h5>
+           <a href="" ><span style="float:left;"><h5>添加</h5></span></a>
+           <a href="" ><span style="float:left;"><h5>导入</h5></span></a>
+           <a href="" ><span style="float:left;"><h5>导出</h5></span></a>
            <a href="{% url 'bom:index' %}" ><span style="float:right;"><h5>返回</h5></span></a>
        </div>
         {% for proj in project %}
            <div class="d-flex align-items-center justify-content-between mb-3">
                <h5>{{ proj.name }}</h5>
            </div>
-
+           <div class="d-flex align-items-center justify-content-between mb-3" style="float: right;">
+               <h5><a href="">添加</a></h5>
+           </div>
             <table width="100%" border="1" cellspacing="1" cellpadding="0" style="table-layout: auto;" >
                  <thead class="text-uppercase">
                        <tr class="ligth ligth-data" align="center">
@@ -27,11 +32,10 @@
                          <tr>
                                 <td width="30" align="center" >{{ b.id }}</td>
                                 <td width="80" align="center" >{{ b.hw_version }}</td>
-                                <td width="180" align="center" >{{ b.bomname }}</td>
-                                <td>{{ b.description }}</td>
+                             <td width="180" align="center" ><a href="{% url 'bom:bomdetail' b.bomname %}">{{ b.bomname }}</a></td>
+                             <td><a href="{% url 'bom:bomdetail' b.bomname %}">{{ b.description }}</a></td>
                                 <td width="120" align="center" >
                                     <div align="center">
-                                        <a href="{% url 'bom:bomdetail' b.bomname %}">查看</a>
                                         <a href="#">编辑</a>
                                         <a href="#">删除</a>
                                     </div>
