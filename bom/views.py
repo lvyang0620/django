@@ -97,6 +97,10 @@ def project(request):
     except EmptyPage:
         project = paginator.page(1)
     return render(request,'page_project.html',locals())
+
+#添加项目信息
+def project_add(request):
+    return render(request,'page_project_add.html',locals())
 #项目信息编辑
 def project_edit(request,id):
     project = Project.objects.get(id=id)
@@ -104,6 +108,10 @@ def project_edit(request,id):
 #处理项目信息编辑表单
 def project_handle(request):
     if request.POST:
+        if 'add' in request.POST:
+            name = request.POST.get('name')
+            description = request.POST.get('description')
+            Project.objects.update_or_create(name=name,description=description)
         if 'modify' in request.POST:
             id = request.POST.get('id')
             name = request.POST.get('name')
@@ -116,6 +124,14 @@ def project_handle(request):
         return HttpResponseRedirect(reverse('bom:project'))
     else:
         return HttpResponse('POST提交错误')
+
+#删除项目信息
+def project_del(request,id):
+    try:
+        Project.objects.filter(id=id).delete()
+        return HttpResponseRedirect(reverse('bom:project'))
+    except Exception as e:
+        return HttpResponse('删除数据错误')
 
 def category(request):
     # project = Project.objects.all()
@@ -131,27 +147,41 @@ def category(request):
         category = paginator.page(1)
     return render(request,'page_category.html',locals())
 
+#添加分类
+def category_add(request):
+    return render(request,'page_category_add.html',locals())
 #分类信息编辑
 def category_edit(request,code):
     category = Category.objects.get(code=code)
     return render(request,'page_category_edit.html',locals())
-
 #处理分类信息编辑表单
 def category_handle(request):
     if request.POST:
-        if 'modify' in request.POST:
+        if 'add' in request.POST:
             code = request.POST.get('code')
             name = request.POST.get('name')
             isvalid = request.POST.get('isvalid')
             print(code,name,isvalid)
+            Category.objects.update_or_create(code=code, name=name, isvalid=isvalid)
+        if 'modify' in request.POST:
+            code = request.POST.get('code')
+            name = request.POST.get('name')
+            isvalid = request.POST.get('isvalid')
             Category.objects.filter(code=code).update(name=name, isvalid=isvalid)
         if 'del' in request.POST:
             code = request.POST.get('code')
             Category.objects.filter(code=code).delete()
-
         return HttpResponseRedirect(reverse('bom:category'))
     else:
         return HttpResponse('POST提交错误')
+
+#删除分类
+def category_del(request,code):
+    try:
+        Category.objects.filter(code=code).delete()
+        return HttpResponseRedirect(reverse('bom:category'))
+    except Exception as e:
+        return HttpResponse('删除数据错误')
 
 def supplier(request):
     # project = Project.objects.all()
@@ -168,7 +198,6 @@ def supplier(request):
 
 #添加供应商信息
 def supplier_add(request):
-    # supplier = Supplier.objects.get(code=code)
     return render(request,'page_supplier_add.html',locals())
 #供应商信息编辑
 def supplier_edit(request,code):
@@ -204,6 +233,13 @@ def supplier_handle(request):
         return HttpResponseRedirect(reverse('bom:supplier'))
     else:
         return HttpResponse('POST提交错误')
+
+def supplier_del(request,code):
+    try:
+        Supplier.objects.filter(code=code).delete()
+        return HttpResponseRedirect(reverse('bom:supplier'))
+    except Exception as e:
+        return HttpResponse('删除数据错误')
 
 def material(request):
     # project = Project.objects.all()

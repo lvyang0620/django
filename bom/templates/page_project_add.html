@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+<!-- page content Start -->
+{% block content %}
+	<div class="content-page">
+       <div class="d-flex align-items-center justify-content-between mb-3">
+           <h5>添加项目信息</h5>
+           <a href="{% url 'bom:project' %}" ><span style="float:right;"><h5>返回</h5></span></a>
+       </div>
+        <div>
+            <form method="post" action="{% url 'bom:project_handle' %}">
+                {% csrf_token %}
+                <label>项目名：</label><input style="width: 300px" name="name"><br><br>
+                <label>描&nbsp&nbsp&nbsp&nbsp述：</label><textarea style="width: 300px;height: 200px" name="description"></textarea><br><br><br>
+                <input type="submit" style="width: 120px" name="add" value="添  加">
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+<!-- page content end  -->

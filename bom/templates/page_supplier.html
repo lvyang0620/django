@@ -31,8 +31,9 @@
                     <td>{{ s.contacts_position }}</td>
                     <td>{{ s.address }}</td>
                     <td>
-                        <div style="float:right;">
-                            <a href="{% url 'bom:supplier_edit' s.code %}">编&nbsp;辑&nbsp;&nbsp;&nbsp;</a>
+                        <div align="center">
+                            <a href="{% url 'bom:supplier_edit' s.code %}">编辑</a>
+                            <a href="{% url 'bom:supplier_del' s.code %}">删除</a>
                         </div>
                     </td>
              </tr>

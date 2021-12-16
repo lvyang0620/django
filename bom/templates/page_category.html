@@ -4,6 +4,9 @@
 	<div class="content-page">
        <div class="d-flex align-items-center justify-content-between mb-3">
            <h5>物料类别表</h5>
+           <a href="{% url 'bom:category_add' %}" ><span style="float:left;"><h5>添加</h5></span></a>
+           <a href="" ><span style="float:left;"><h5>导入</h5></span></a>
+           <a href="" ><span style="float:left;"><h5>导出</h5></span></a>
            <a href="{% url 'bom:index' %}" ><span style="float:right;"><h5>返回</h5></span></a>
        </div>
       <table width="100%" border="1" cellspacing="1" cellpadding="0">
@@ -24,7 +27,7 @@
                    <td align="center">
                       <div>
                             <a href="{% url 'bom:category_edit' c.code %}">编辑</a>
-                            <a href="#">删除</a>
+                            <a href="{% url 'bom:category_del' c.code %}">删除</a>
                       </div>
                    </td>
              </tr>

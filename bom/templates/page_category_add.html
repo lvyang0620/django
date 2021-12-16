@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+<!-- page content Start -->
+{% block content %}
+	<div class="content-page">
+       <div class="d-flex align-items-center justify-content-between mb-3">
+           <h5>添加分类</h5>
+           <a href="{% url 'bom:category' %}" ><span style="float:right;"><h5>返回</h5></span></a>
+       </div>
+        <div>
+            <form method="post" action="{% url 'bom:category_handle' %}">
+                {% csrf_token %}
+                <label>类别编码：</label><input style="width: 300px" name="code"><br><br>
+                <label>类别名称：</label><input style="width: 300px" name="name"><br><br>
+                <label>有效状态：</label><input style="width: 300px" name="isvalid"><br><br>
+                <input type="submit" style="width: 120px" name="add" value="添  加">
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+<!-- page content end  -->
