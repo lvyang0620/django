@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'api',
     'bom',
     'user',
     'school',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.conf',
     'import_export',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -136,3 +138,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100}
+            # "PASSWORD": "密码",
+        }
+    }
+}
+
+
+TENCENT_SECRITID = "AKIDmdEYbPvA8qHQItFLAj13oJYXFhsoTrxn"
+TENCENT_SECRITKEY = "atvhDTSBdoiLiodARQ8Zj24qKYVBajbC"
+TENCENT_CITY = "ap-guangzhou"
+TENCENT_APPID = "1400616664"
+TENCENT_SIGN = "吕哥的地盘公众号"
